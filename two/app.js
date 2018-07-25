@@ -1,8 +1,8 @@
 //JSON vs Array in JS
-var personJSON = { "name":"John", "age":30, "car":null };
+var personJSON = { "name": "John", "age": 30, "car": null };
 var personsJSON = [
-    { "name":"John", "age":30, "car":null },
-    { "name":"Smith", "age":20, "car":"Nisan" } 
+    { "name": "John", "age": 30, "car": null },
+    { "name": "Smith", "age": 20, "car": "Nisan" } 
 ];
 
 
