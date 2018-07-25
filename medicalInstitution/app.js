@@ -14,7 +14,7 @@ class Doctor {
         this.firstName = firstName;
         this.lastName = lastName;
         this.speciality = speciality;
-        this.patients = []
+        this.patients = [];
         eventLog(`Kreiran doktor "${firstName}"`);
     }
 
