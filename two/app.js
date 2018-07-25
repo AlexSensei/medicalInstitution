@@ -1,12 +1,15 @@
 //JSON vs Array in JS
 var personJSON = { "name":"John", "age":30, "car":null };
-var personsJSON = [{ "name":"John", "age":30, "car":null }, { "name":"Smith", "age":20, "car":"Nisan" } ];
+var personsJSON = [
+    { "name":"John", "age":30, "car":null },
+    { "name":"Smith", "age":20, "car":"Nisan" } 
+];
 
 
 //Kreiranje klase 
-function Person (first_name, last_name, gender) {
-    this.first_name = first_name;
-    this.last_name = last_name;
+function Person (firstName, lastName, gender) {
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.gender = gender;
 }
 
@@ -14,8 +17,8 @@ function Person (first_name, last_name, gender) {
 var osoba = new Person('John', 'Smith', 'Male');
 
 //Nasledjivanje klase
-function Worker (first_name, last_name, gender, company) {
-    Person.call(this, first_name, last_name, gender);
+function Worker (firstName, lastName, gender, company) {
+    Person.call(this, firstName, lastName, gender);
 
     this.company = company;
 }
@@ -38,7 +41,7 @@ var coffeeState = 'Hot';
 
 var isProgrammerEfficient = new Promise(
     function(resolve, reject) {
-        if(coffeeState=='Hot') {
+        if(coffeeState == 'Hot') {
             var programmer = {
                 state: 'Happy',
                 efficiency: '150%'
@@ -53,12 +56,12 @@ var isProgrammerEfficient = new Promise(
 
 var tryCoffee = function () {
     isProgrammerEfficient
-    .then(function (fulfilled) {
-        console.log(fulfilled);
-    })
-    .catch(function (error) {
-        console.log(error.message);
-    })
+        .then(function (fulfilled) {
+            console.log(fulfilled);
+        })
+        .catch(function (error) {
+            console.log(error.message);
+        })
 }
 
 tryCoffee();
