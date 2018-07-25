@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script src='prvi.js'></script>
+        <script src='drugi.js'></script>
+    </head>
+    <body>
+        <p>Hello</p>
+        <script>
+            var variableInFirstScript = 'variableInFirstScript';
+        </script>
+        <script>
+            (function() {
+                flyToTheMoon();
+            })()
+            //Skripta ne vidi varijablu koja je definisana u skripti posle
+            //console.log(variableInSomeTab);
+            
+            //Program vidi varijablu iz prve skripte
+            console.log(variableInFirstScript);
+        </script>
+        <script>
+            var variableInSecondScript = 'variableInSecondScript';
+            //Program vidi obe varijable
+            console.log(varibleInFirstJS);
+            console.log(variableInSecondJS);
+        </script>
+    </body>
+</html>
