@@ -9,7 +9,7 @@ var flyToTheMoon = function()
     //console.log(variableinFirstJS+' PrviJSVarijabla');
     
     //Pozvace se
-    console.log(variableInAnonnymous+' AnonyVarijabla');
+    console.log(variableInAnonnymous);
 }
 //Nece se pozvati jer nije u scope
 //console.log(variableInAnonnymous+' AnonyVarijabla');
