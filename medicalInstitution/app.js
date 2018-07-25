@@ -82,8 +82,6 @@ class Patient {
     performExamination (type) {
         const appointment = this.appointments.filter(appointment => appointment.type === type)[0]
         this.appointments = this.appointments.filter(appointment => appointment.type !== type)
-        console.log(appointment)
-        console.log(this.appointments);
         if(type === 'BP')
             appointment.preformBPExamination(this);
         if(type === 'SIB')
@@ -100,9 +98,9 @@ let pac = new Patient('Dragan', 'Pecar', '3123214');
 pac.chooseDoctor(doc);
 
 pac.appointControl('02.05.2003', '12:00', 'SIB');
-console.log("123");
+
 pac.appointControl('02.05.2003', '12:00', 'BP');
-console.log("123");
+
 pac.performExamination('SIB');
 
 pac.performExamination('BP');
