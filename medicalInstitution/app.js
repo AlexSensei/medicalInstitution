@@ -7,7 +7,7 @@ function eventLog(type)
     let hh = date.getHours(); 
     let m = date.getMinutes();
 
-    console.log('[ ' + dd + '.' + mm + '.' + yyyy + ' ' + hh + ':' + m + ' ] ' + type);
+    console.log(`[ ${dd}.${mm}.${yyyy} ${hh}:${m} ] ${type}`);
 }
 class Doctor {
     constructor (firstName, lastName, speciality) {
@@ -15,67 +15,94 @@ class Doctor {
         this.lastName = lastName;
         this.speciality = speciality;
         this.patients = []
-        eventLog('Kreiran doktor "' + firstName + '"');
+        eventLog(`Kreiran doktor "${firstName}"`);
     }
 
-    appointControl (patient, date, time, type) {
-        let appointment = {'Date': date, 'Time': time, 'Type': type};
-        patient.appointments.push(appointment)
+    addPatient (patient) {
+        this.patients.push(patient);
     }
 }
-
+class Appointment {
+    constructor (date, time, type) {
+        this.date = date;
+        this.time = time;
+        this.type = type;
+    }
+    preformBPExamination (patient) {
+        const upperValue = Math.floor(Math.random() * (200 - 100) + 100);
+        const lowerValue = Math.floor(Math.random() * (100 - 50) + 50);
+        const puls = Math.floor(Math.random() * (80 - 50) + 50);
+        const log = `${patient.firstName} obavlja merenje krvnog pritiska, gornja vrednost je: 
+                        ${upperValue}, donja vrednost je: 
+                        ${lowerValue}, puls je: 
+                        ${puls}`;
+        eventLog(log);
+    }
+    preformSIBExamination (patient) {
+        const sugarInBlood = Math.floor(Math.random() * (200 - 100) + 100);
+        const day = Math.floor(Math.random() * (30 - 1) + 1);
+        const month = Math.floor(Math.random() * (12 - 1) + 1);
+        const date = `${day}.${month}.2018`;
+        const log = `${patient.firstName} obavlja merenje secera u krvi, vrednost je: 
+                        ${sugarInBlood}, vreme zadnjeg obroka je: 
+                        ${date}`;
+        eventLog(log);
+    }
+    preformCIBExamination (patient) {
+        const chloresterolInBlood = Math.floor(Math.random() * (200 - 100) + 100);
+        const day = Math.floor(Math.random() * (30 - 1) + 1);
+        const month = Math.floor(Math.random() * (12 - 1) + 1);
+        const date = `${day}.${month}.2018`;
+        const log = `${patient.firstName} obavlja merenje nivoa holesterola u krvi, vrednost je: 
+                        ${chloresterolInBlood}, vreme zadnjeg obroka je: 
+                        ${date}`;
+        eventLog(log);
+    }
+}
 class Patient {
-    constructor (firstName, lastName, jmbg, recordsId) {
+    constructor (firstName, lastName, jmbg) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.jmbg = jmbg;
-        this.recordsId = recordsId;
-        this.appointments=[] 
-        eventLog('Kreiran pacijent "' + firstName + '"');
+        this.appointments = [];
+        eventLog(`Kreiran pacijent "${firstName}"`);
     }
 
     chooseDoctor (doctor) {
         this.doctor = doctor;
-        doctor.patients.push(this);
-        eventLog('Pacijent "' + this.firstName + '" izabrao doktora "' + doctor.firstName + '"');
+        doctor.addPatient(this);
+        eventLog(`Pacijent "${this.firstName}" izabrao doktora "${doctor.firstName}"`);
     }
-    doTheControl (type,values) {
-        let appointmentToRemove;
-        for( let i = 0; i < this.appointments.length; i++)
-        {
-            const appointment = this.appointments[i];
-            if( appointment.type == type )
-            {
-                appointmentToRemove = i;
-            }
-        }
-        this.appointments.splice(appointmentToRemove,1);
-        if(type == 'BP')
-            eventLog('Dragan obavlja merenje krvnog pritiska, gornja vrednost je: '
-                + values.upperValue + ', donja vrednost je: '
-                + values.lowerValue + ', puls je: ' + 
-                values.puls);
-        if(type == 'SIB')
-            eventLog('Dragan obavlja merenje secera u krvi, vrednost je: '
-                + values.value + ', vreme zadnjeg obroka je: '
-                + values.meal);
-        if(type == 'CIB')
-            eventLog('Dragan obavlja merenje nivoa holesterola u krvi, vrednost je: '
-                + values.value + ', vreme zadnjeg obroka je: '
-                + values.meal);
+
+    appointControl (date, time, type) {
+        const appointment = new Appointment(date, time, type);
+        this.appointments.push(appointment)
+    }
+
+    performExamination (type) {
+        const appointment = this.appointments.filter(appointment => appointment.type === type)[0]
+        this.appointments = this.appointments.filter(appointment => appointment.type !== type)
+        console.log(appointment)
+        console.log(this.appointments);
+        if(type === 'BP')
+            appointment.preformBPExamination(this);
+        if(type === 'SIB')
+            appointment.preformSIBExamination(this);
+        if(type === 'CIB')
+            appointment.preformCIBExamination(this);
     }
 }
 
 let doc = new Doctor('Milan', 'Doca', 'Ko zna');
 
-let pac = new Patient('Dragan', 'Pecar', '3123214', '123213214');
+let pac = new Patient('Dragan', 'Pecar', '3123214');
 
 pac.chooseDoctor(doc);
 
-doc.appointControl(pac, '02.05.2003', '12:00', 'SIB');
+pac.appointControl('02.05.2003', '12:00', 'SIB');
+console.log("123");
+pac.appointControl('02.05.2003', '12:00', 'BP');
+console.log("123");
+pac.performExamination('SIB');
 
-doc.appointControl(pac, '02.05.2003', '12:00', 'BP');
-
-pac.doTheControl('SIB', {'value': '150', 'meal': '09:00'});
-
-pac.doTheControl('BP', {'upperValue': '150', 'lowerValue': '100', 'puls': '120'});
+pac.performExamination('BP');
